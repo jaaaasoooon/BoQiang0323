@@ -695,6 +695,7 @@ namespace BuildReportApp
                         tbMaxSerialNum.Text = string.Empty;
                         tbMinSerialNum.Text = string.Empty;
                         tbSnBase.Text = string.Empty;
+
                     }));
                 }));
             }
