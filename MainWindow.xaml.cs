@@ -627,8 +627,8 @@ namespace BuildReportApp
                 SnList.Clear();
                 btnBuildBatch.IsEnabled = false;
                 btnSaveData.IsEnabled = false;
-                labMsg.Content = "批量数据生成中，请等待......";
                 pbBuilding.Value = 0;
+                labPercent.Content = "0%";
                 double val = maxVal - minVal + 1;
                 double step = 100.00 / val;
                 int len = tbMinSerialNum.Text.Trim().Length;
@@ -677,7 +677,11 @@ namespace BuildReportApp
                         WriteTestData(ws, Sn);
                         excel.DisplayAlerts = false;
                         wb.Save();
-                        Dispatcher.Invoke(new System.Action(() => { pbBuilding.Value += step; }));
+                        Dispatcher.Invoke(new System.Action(() => 
+                        {
+                            pbBuilding.Value += step;
+                            labPercent.Content = string.Format("{0}%", Math.Round(pbBuilding.Value, 2));
+                        }));
 
                         index++;
                         SnList.Add(Sn);
@@ -686,9 +690,7 @@ namespace BuildReportApp
 
                     Dispatcher.Invoke(new System.Action(() =>
                     {
-                        //MessageBox.Show("批量数据生成成功！", "提示", MessageBoxButton.OK, MessageBoxImage.Information);
-                        labMsg.Content = "批量数据生成成功！";
-                        Thread.Sleep(2000);
+                        Thread.Sleep(1000);
                         gridBuilding.Visibility = Visibility.Collapsed;
                         btnBuildBatch.IsEnabled = true;
                         btnSaveData.IsEnabled = true;
@@ -714,4 +716,5 @@ namespace BuildReportApp
             }
         }
     }
+
 }
